@@ -1,6 +1,6 @@
 {
-    "name": "מחשבון פוקר - Poker Odds Calculator",
-    "short_name": "פוקר",
+    "name": "צ'יפ לידר - מחשבון פוקר",
+    "short_name": "צ'יפ לידר",
     "description": "חישוב הסתברויות פוקר בזמן אמת",
     "start_url": "/poker-odds-calculator/",
     "display": "standalone",
