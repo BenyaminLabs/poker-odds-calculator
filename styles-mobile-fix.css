@@ -1,0 +1,111 @@
+/* Additional CSS fixes for mobile scroll and new sections */
+
+/* Fix mobile viewport scroll issues */
+body {
+    height: 100vh;
+    height: 100dvh;
+    /* Dynamic viewport height for mobile browsers */
+    overflow: hidden;
+}
+
+#app {
+    height: 100%;
+    overflow: hidden;
+}
+
+.content {
+    /* Ensure content area doesn't get hidden by browser UI */
+    height: 100%;
+    padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+}
+
+/* Bottom section styling */
+.bottom-section {
+    margin-top: var(--spacing-md);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-gold);
+    margin-bottom: var(--spacing-md);
+}
+
+.setting-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.setting-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+/* PWA Info Box */
+.pwa-info {
+    padding: var(--spacing-md);
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid var(--accent-green);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.pwa-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--accent-green);
+    margin-bottom: var(--spacing-xs);
+}
+
+.pwa-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Make selected-cards clickable indicator */
+.selected-cards {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.selected-cards:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+}
+
+/* Remove header theme selector styling (now in bottom) */
+.header .theme-selector {
+    display: none;
+}
+
+/* Ensure theme selector in settings has proper styling */
+.setting-group .theme-selector {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+/* Mobile viewport fixes */
+@media (max-height: 700px) {
+    .pwa-info {
+        padding: var(--spacing-sm);
+    }
+
+    .pwa-title {
+        font-size: var(--font-size-sm);
+    }
+
+    .pwa-text {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        height: -webkit-fill-available;
+    }
+}

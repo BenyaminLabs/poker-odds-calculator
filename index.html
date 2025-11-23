@@ -22,6 +22,7 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="styles-addon.css">
+  <link rel="stylesheet" href="styles-mobile-fix.css">
 </head>
 
 <body>
@@ -30,13 +31,6 @@
     <header class="header">
       <h1>🃏 מחשבון פוקר</h1>
       <p>חישוב הסתברויות בזמן אמת</p>
-
-      <div class="theme-selector">
-        <button class="theme-btn active" data-theme="default" title="Classic Green">🟢</button>
-        <button class="theme-btn" data-theme="ocean" title="Ocean Blue">🔵</button>
-        <button class="theme-btn" data-theme="purple" title="Purple Night">🟣</button>
-        <button class="theme-btn" data-theme="light" title="Light Mode">☀️</button>
-      </div>
     </header>
 
     <!-- Main Content -->
@@ -54,7 +48,7 @@
           </label>
         </div>
 
-        <div class="selected-cards" id="playerCardsDisplay">
+        <div class="selected-cards" id="playerCardsDisplay" onclick="toggleCardGrid('playerGrid')">
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
         </div>
@@ -71,7 +65,7 @@
           </h2>
         </div>
 
-        <div class="selected-cards" id="communityCardsDisplay">
+        <div class="selected-cards" id="communityCardsDisplay" onclick="toggleCardGrid('communityGrid')">
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
@@ -167,6 +161,26 @@
           <span class="loading" id="initialCalculateLoading" style="display: none;"></span>
         </button>
       </div>
+
+      <!-- Theme Selector + PWA Info -->
+      <section class="section bottom-section">
+        <h3 class="section-subtitle">⚙️ הגדרות</h3>
+
+        <div class="setting-group">
+          <label class="setting-label">ערכת צבעים</label>
+          <div class="theme-selector">
+            <button class="theme-btn active" data-theme="default" title="Classic Green">🟢</button>
+            <button class="theme-btn" data-theme="ocean" title="Ocean Blue">🔵</button>
+            <button class="theme-btn" data-theme="purple" title="Purple Night">🟣</button>
+            <button class="theme-btn" data-theme="light" title="Light Mode">☀️</button>
+          </div>
+        </div>
+
+        <div class="pwa-info">
+          <p class="pwa-title">📱 התקן כאפליקציה</p>
+          <p class="pwa-text">הדפדפן יציע להתקין אוטומטית.<br>iPhone: Share → Add to Home Screen</p>
+        </div>
+      </section>
     </main>
   </div>
 
