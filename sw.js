@@ -1,4 +1,4 @@
-const CACHE_NAME = 'poker-calc-v2';
+const CACHE_NAME = 'poker-calc-v3';
 const urlsToCache = [
     '/poker-odds-calculator/',
     '/poker-odds-calculator/index.html',
