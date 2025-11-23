@@ -30,8 +30,12 @@ body {
 }
 
 .header p {
-    display: none;
-    /* Hide subtitle to save space */
+    display: block;
+    /* Restore subtitle */
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    opacity: 0.8;
 }
 
 /* Content area adjustments */
