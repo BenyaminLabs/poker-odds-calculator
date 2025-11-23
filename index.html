@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f1419">
-  
+
   <title>מחשבון פוקר - Poker Odds Calculator</title>
   <meta name="description" content="חשב את סיכויי הזכייה שלך במשחק פוקר בזמן אמת">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div id="app">
     <!-- Header -->
@@ -29,26 +31,34 @@
     <main class="content">
       <!-- Player Hand Section -->
       <section class="section">
-        <div class="player-cards-header">
-          <h2 class="section-title">🎴 הקלפים שלי</h2>
-          <label class="hide-toggle">
+        <div class="section-header" onclick="toggleCardGrid('playerGrid')">
+          <h2 class="section-title">
+            <span id="playerGridIcon" class="toggle-icon">▼</span>
+            🎴 הקלפים שלי
+          </h2>
+          <label class="hide-toggle" onclick="event.stopPropagation()">
             <input type="checkbox" id="hideCards">
             <span>הסתר</span>
           </label>
         </div>
-        
+
         <div class="selected-cards" id="playerCardsDisplay">
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
         </div>
-        
-        <div class="card-grid" id="playerCardSelector"></div>
+
+        <div class="card-grid collapsed" id="playerCardSelector"></div>
       </section>
 
       <!-- Community Cards Section -->
       <section class="section">
-        <h2 class="section-title">🎲 קלפים על השולחן</h2>
-        
+        <div class="section-header" onclick="toggleCardGrid('communityGrid')">
+          <h2 class="section-title">
+            <span id="communityGridIcon" class="toggle-icon">▼</span>
+            🎲 קלפים על השולחן
+          </h2>
+        </div>
+
         <div class="selected-cards" id="communityCardsDisplay">
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
@@ -56,27 +66,31 @@
           <div class="empty-slot"></div>
           <div class="empty-slot"></div>
         </div>
-        
-        <div class="card-grid" id="communityCardSelector"></div>
+
+        <div class="card-grid collapsed" id="communityCardSelector"></div>
       </section>
 
       <!-- Number of Players -->
       <section class="section">
-        <div class="number-input">
-          <label for="numPlayers">👥 מספר שחקנים במשחק</label>
-          <input type="number" id="numPlayers" min="2" max="10" value="4">
+        <div class="stepper-container">
+          <label class="stepper-label">👥 מספר שחקנים במשחק</label>
+          <div class="stepper">
+            <button class="stepper-btn" id="decrementPlayers" onclick="changePlayerCount(-1)">−</button>
+            <div class="stepper-value" id="numPlayersDisplay">4</div>
+            <button class="stepper-btn" id="incrementPlayers" onclick="changePlayerCount(1)">+</button>
+          </div>
         </div>
       </section>
 
       <!-- Results Section -->
       <section class="section results" id="resultsSection" style="display: none;">
         <h2 class="section-title">📊 תוצאות</h2>
-        
+
         <div class="win-probability">
           <div class="win-percentage" id="winPercentage">--</div>
           <div class="win-label">סיכוי לזכייה</div>
         </div>
-        
+
         <div class="hand-info">
           <div class="info-row">
             <span class="info-label">יד נוכחית</span>
@@ -110,4 +124,5 @@
   <script src="poker-logic.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>

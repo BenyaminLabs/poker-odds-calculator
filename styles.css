@@ -153,14 +153,33 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.section-header {
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header:hover .section-title {
+    color: var(--accent-gold);
+}
+
 .section-title {
     font-size: var(--font-size-lg);
     font-weight: 600;
     color: var(--text-gold);
-    margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    transition: color var(--transition-fast);
+}
+
+.toggle-icon {
+    font-size: var(--font-size-sm);
+    transition: transform var(--transition-base);
+    display: inline-block;
 }
 
 /* Player Cards Section */
@@ -179,17 +198,46 @@ body {
     color: var(--text-secondary);
     cursor: pointer;
     transition: color var(--transition-fast);
+    user-select: none;
 }
 
 .hide-toggle:hover {
     color: var(--accent-gold);
 }
 
+/* Custom Checkbox Styling */
 .hide-toggle input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: var(--accent-gold);
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+.hide-toggle input[type="checkbox"]:hover {
+    border-color: var(--accent-gold);
+}
+
+.hide-toggle input[type="checkbox"]:checked {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+}
+
+.hide-toggle input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--bg-primary);
+    font-size: 14px;
+    font-weight: 700;
 }
 
 /* Card Grid */
@@ -200,6 +248,15 @@ body {
     max-height: 200px;
     overflow-y: auto;
     padding: var(--spacing-xs);
+    transition: max-height var(--transition-slow), opacity var(--transition-base), margin-top var(--transition-slow);
+}
+
+.card-grid.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    overflow: hidden;
+    padding: 0;
 }
 
 .card-button {
@@ -304,9 +361,97 @@ body {
 .empty-slot {
     width: 50px;
     height: 60px;
-    border: 2px dashed var(--border-color);
+    border: 2px solid var(--accent-gold);
     border-radius: 8px;
-    background: var(--bg-primary);
+    background: linear-gradient(135deg, var(--bg-table) 0%, #0a3319 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.empty-slot::before {
+    content: "♠";
+    font-size: 28px;
+    color: rgba(255, 215, 0, 0.25);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.empty-slot::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+/* Stepper (Number Input Replacement) */
+.stepper-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.stepper-label {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.stepper-btn {
+    width: 50px;
+    height: 50px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.stepper-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-gold);
+    transform: scale(1.05);
+}
+
+.stepper-btn:active {
+    transform: scale(0.95);
+}
+
+.stepper-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.stepper-value {
+    min-width: 60px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--bg-table);
+    border: 2px solid var(--accent-green);
+    border-radius: 12px;
+    color: var(--accent-gold);
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
 }
 
 /* Number Input */

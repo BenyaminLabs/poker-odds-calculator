@@ -5,8 +5,48 @@ const state = {
     numPlayers: 4,
     hidePlayerCards: false,
     availableCards: [],
-    calculating: false
+    calculating: false,
+    gridStates: {
+        playerGrid: true,  // collapsed by default
+        communityGrid: true  // collapsed by default
+    }
 };
+
+// Toggle card grid visibility
+function toggleCardGrid(gridId) {
+    const isPlayerGrid = gridId === 'playerGrid';
+    const selector = isPlayerGrid ? 'playerCardSelector' : 'communityCardSelector';
+    const icon = document.getElementById(isPlayerGrid ? 'playerGridIcon' : 'communityGridIcon');
+    const grid = document.getElementById(selector);
+
+    state.gridStates[gridId] = !state.gridStates[gridId];
+
+    if (state.gridStates[gridId]) {
+        grid.classList.add('collapsed');
+        icon.textContent = '▼';
+    } else {
+        grid.classList.remove('collapsed');
+        icon.textContent = '▲';
+    }
+}
+
+// Change player count with stepper
+function changePlayerCount(delta) {
+    const newCount = state.numPlayers + delta;
+    if (newCount >= 2 && newCount <= 10) {
+        state.numPlayers = newCount;
+        document.getElementById('numPlayersDisplay').textContent = newCount;
+
+        // Update button states
+        document.getElementById('decrementPlayers').disabled = newCount <= 2;
+        document.getElementById('incrementPlayers').disabled = newCount >= 10;
+
+        // Recalculate if we have cards
+        if (state.playerCards.length === 2 && state.communityCards.length > 0) {
+            calculateOdds();
+        }
+    }
+}
 
 // Initialize available cards
 function initializeCards() {
@@ -197,7 +237,9 @@ function resetAll() {
     state.playerCards = [];
     state.communityCards = [];
     state.numPlayers = 4;
-    document.getElementById('numPlayers').value = 4;
+    document.getElementById('numPlayersDisplay').textContent = 4;
+    document.getElementById('decrementPlayers').disabled = false;
+    document.getElementById('incrementPlayers').disabled = false;
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('initialCalculateBtn').style.display = 'flex';
     updateUI();
@@ -209,21 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCards();
     updateUI();
 
+    // Initialize stepper button states
+    document.getElementById('decrementPlayers').disabled = state.numPlayers <= 2;
+    document.getElementById('incrementPlayers').disabled = state.numPlayers >= 10;
+
     // Hide cards toggle
     document.getElementById('hideCards').addEventListener('change', (e) => {
         state.hidePlayerCards = e.target.checked;
         updateSelectedCardsDisplay('playerCardsDisplay', state.playerCards, 2, state.hidePlayerCards);
-    });
-
-    // Number of players
-    document.getElementById('numPlayers').addEventListener('input', (e) => {
-        const value = parseInt(e.target.value);
-        if (value >= 2 && value <= 10) {
-            state.numPlayers = value;
-            if (state.playerCards.length === 2 && state.communityCards.length > 0) {
-                calculateOdds();
-            }
-        }
     });
 
     // Calculate button
