@@ -1,0 +1,23 @@
+{
+    "name": "מחשבון פוקר - Poker Odds Calculator",
+    "short_name": "פוקר",
+    "description": "חישוב הסתברויות פוקר בזמן אמת",
+    "start_url": "/poker-odds-calculator/",
+    "display": "standalone",
+    "background_color": "#0f1419",
+    "theme_color": "#0f1419",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "icons/icon.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
