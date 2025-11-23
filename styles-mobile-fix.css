@@ -6,22 +6,38 @@ body {
     height: 100dvh;
     /* Dynamic viewport height for mobile browsers */
     overflow: hidden;
+    padding: var(--spacing-sm);
+    /* Reduce padding */
 }
 
 #app {
     height: 100%;
     overflow: hidden;
+    gap: var(--spacing-sm);
+    /* Reduce gap */
+}
+
+/* Reduce header padding */
+.header {
+    padding: var(--spacing-xs) 0;
+}
+
+.header h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: 0;
 }
 
 .content {
     /* Ensure content area doesn't get hidden by browser UI */
     height: 100%;
-    padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+    /* Increase bottom padding */
 }
 
 /* Bottom section styling */
 .bottom-section {
     margin-top: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
 }
 
 .section-subtitle {
@@ -29,6 +45,7 @@ body {
     font-weight: 600;
     color: var(--text-gold);
     margin-bottom: var(--spacing-md);
+    text-align: center;
 }
 
 .setting-group {
@@ -41,6 +58,7 @@ body {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-sm);
     font-weight: 500;
+    text-align: center;
 }
 
 /* PWA Info Box */
@@ -86,6 +104,16 @@ body {
     display: flex;
     gap: var(--spacing-sm);
     justify-content: center;
+}
+
+/* Center section titles (icons) */
+.section-title {
+    justify-content: center;
+    width: 100%;
+}
+
+.section-header {
+    margin-bottom: var(--spacing-sm);
 }
 
 /* Mobile viewport fixes */
