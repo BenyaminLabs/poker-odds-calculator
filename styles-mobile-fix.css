@@ -1,86 +1,95 @@
-/* Additional CSS fixes for mobile scroll and new sections */
+/* Mobile Fixes & Layout Adjustments */
 
 /* Fix mobile viewport scroll issues */
 body {
     height: 100vh;
     height: 100dvh;
-    /* Dynamic viewport height for mobile browsers */
     overflow: hidden;
     padding: var(--spacing-sm);
-    /* Reduce padding */
+    /* Reduced padding */
 }
 
 #app {
     height: 100%;
     overflow: hidden;
     gap: var(--spacing-sm);
-    /* Reduce gap */
+    /* Reduced gap */
 }
 
-/* Reduce header padding */
+/* Header adjustments */
 .header {
-    padding: var(--spacing-xs) 0;
+    padding: var(--spacing-sm) 0;
+    /* Reduced padding */
+    flex-shrink: 0;
 }
 
 .header h1 {
-    font-size: var(--font-size-xl);
     margin-bottom: 0;
+    font-size: var(--font-size-xl);
+    /* Slightly smaller title */
 }
 
+.header p {
+    display: none;
+    /* Hide subtitle to save space */
+}
+
+/* Content area adjustments */
 .content {
-    /* Ensure content area doesn't get hidden by browser UI */
     height: 100%;
     padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
-    /* Increase bottom padding */
+    /* More bottom padding */
+    padding-top: var(--spacing-xs);
 }
 
 /* Bottom section styling */
 .bottom-section {
-    margin-top: var(--spacing-md);
-    padding-bottom: var(--spacing-lg);
-}
-
-.section-subtitle {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    color: var(--text-gold);
-    margin-bottom: var(--spacing-md);
-    text-align: center;
+    margin-top: auto;
+    /* Push to bottom if space allows */
+    background: transparent;
+    /* Remove background to make it cleaner */
+    border: none;
+    box-shadow: none;
+    padding: 0;
 }
 
 .setting-group {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
-.setting-label {
-    display: block;
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-sm);
-    font-weight: 500;
-    text-align: center;
+/* Theme selector adjustments */
+.theme-selector {
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.theme-btn {
+    width: 44px;
+    /* Slightly larger touch target */
+    height: 44px;
 }
 
 /* PWA Info Box */
 .pwa-info {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     background: rgba(16, 185, 129, 0.1);
-    border: 2px solid var(--accent-green);
+    border: 1px solid var(--accent-green);
     border-radius: 8px;
     text-align: center;
+    margin-top: var(--spacing-sm);
 }
 
 .pwa-title {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--accent-green);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 2px;
 }
 
 .pwa-text {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.3;
 }
 
 /* Make selected-cards clickable indicator */
@@ -97,38 +106,6 @@ body {
 /* Remove header theme selector styling (now in bottom) */
 .header .theme-selector {
     display: none;
-}
-
-/* Ensure theme selector in settings has proper styling */
-.setting-group .theme-selector {
-    display: flex;
-    gap: var(--spacing-sm);
-    justify-content: center;
-}
-
-/* Center section titles (icons) */
-.section-title {
-    justify-content: center;
-    width: 100%;
-}
-
-.section-header {
-    margin-bottom: var(--spacing-sm);
-}
-
-/* Mobile viewport fixes */
-@media (max-height: 700px) {
-    .pwa-info {
-        padding: var(--spacing-sm);
-    }
-
-    .pwa-title {
-        font-size: var(--font-size-sm);
-    }
-
-    .pwa-text {
-        font-size: var(--font-size-xs);
-    }
 }
 
 /* iOS Safari specific fixes */

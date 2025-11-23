@@ -29,7 +29,8 @@
   <div id="app">
     <!-- Header -->
     <header class="header">
-      <h1>🃏</h1>
+      <h1>🃏 מחשבון פוקר</h1>
+      <p>חישוב הסתברויות בזמן אמת</p>
     </header>
 
     <!-- Main Content -->
@@ -37,9 +38,13 @@
       <!-- Player Hand Section -->
       <section class="section">
         <div class="section-header" onclick="toggleCardGrid('playerGrid')">
-          <h2 class="section-title">🎴</h2>
+          <h2 class="section-title">
+            <span id="playerGridIcon" class="toggle-icon">▼</span>
+            🎴 הקלפים שלי
+          </h2>
           <label class="hide-toggle" onclick="event.stopPropagation()">
             <input type="checkbox" id="hideCards">
+            <span>הסתר</span>
           </label>
         </div>
 
@@ -54,7 +59,10 @@
       <!-- Community Cards Section -->
       <section class="section">
         <div class="section-header" onclick="toggleCardGrid('communityGrid')">
-          <h2 class="section-title">🎲</h2>
+          <h2 class="section-title">
+            <span id="communityGridIcon" class="toggle-icon">▼</span>
+            🎲 קלפים על השולחן
+          </h2>
         </div>
 
         <div class="selected-cards" id="communityCardsDisplay" onclick="toggleCardGrid('communityGrid')">
@@ -70,15 +78,17 @@
 
       <!-- Pot & Bet Information -->
       <section class="section pot-section">
+        <h2 class="section-title">💰 מידע על הפוט</h2>
+
         <div class="pot-inputs">
           <div class="input-group">
-            <label>💰 פוט</label>
-            <input type="number" id="potSize" min="0" value="0" placeholder="0">
+            <label>גודל הפוט (₪)</label>
+            <input type="number" id="potSize" min="0" value="0" placeholder="100">
           </div>
 
           <div class="input-group">
-            <label>🎯 הימור</label>
-            <input type="number" id="betSize" min="0" value="0" placeholder="0">
+            <label>הימור לעשות Call (₪)</label>
+            <input type="number" id="betSize" min="0" value="0" placeholder="20">
           </div>
         </div>
       </section>
@@ -86,12 +96,12 @@
       <!-- Number of Players -->
       <section class="section">
         <div class="stepper-container">
+          <label class="stepper-label">👥 מספר שחקנים במשחק</label>
           <div class="stepper">
             <button class="stepper-btn" id="decrementPlayers" onclick="changePlayerCount(-1)">−</button>
             <div class="stepper-value" id="numPlayersDisplay">4</div>
             <button class="stepper-btn" id="incrementPlayers" onclick="changePlayerCount(1)">+</button>
           </div>
-          <label class="stepper-label" style="text-align: center;">👥 שחקנים</label>
         </div>
       </section>
 
@@ -154,10 +164,7 @@
 
       <!-- Theme Selector + PWA Info -->
       <section class="section bottom-section">
-        <h3 class="section-subtitle">⚙️ הגדרות</h3>
-
         <div class="setting-group">
-          <label class="setting-label">ערכת צבעים</label>
           <div class="theme-selector">
             <button class="theme-btn active" data-theme="default" title="Classic Green">🟢</button>
             <button class="theme-btn" data-theme="ocean" title="Ocean Blue">🔵</button>
