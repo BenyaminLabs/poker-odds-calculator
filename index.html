@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-addon.css">
 </head>
 
 <body>
@@ -25,6 +26,13 @@
     <header class="header">
       <h1>🃏 מחשבון פוקר</h1>
       <p>חישוב הסתברויות בזמן אמת</p>
+
+      <div class="theme-selector">
+        <button class="theme-btn active" data-theme="default" title="Classic Green">🟢</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean Blue">🔵</button>
+        <button class="theme-btn" data-theme="purple" title="Purple Night">🟣</button>
+        <button class="theme-btn" data-theme="light" title="Light Mode">☀️</button>
+      </div>
     </header>
 
     <!-- Main Content -->
@@ -70,6 +78,23 @@
         <div class="card-grid collapsed" id="communityCardSelector"></div>
       </section>
 
+      <!-- Pot & Bet Information -->
+      <section class="section pot-section">
+        <h2 class="section-title">💰 מידע על הפוט</h2>
+
+        <div class="pot-inputs">
+          <div class="input-group">
+            <label>גודל הפוט (₪)</label>
+            <input type="number" id="potSize" min="0" value="0" placeholder="100">
+          </div>
+
+          <div class="input-group">
+            <label>הימור לעשות Call (₪)</label>
+            <input type="number" id="betSize" min="0" value="0" placeholder="20">
+          </div>
+        </div>
+      </section>
+
       <!-- Number of Players -->
       <section class="section">
         <div class="stepper-container">
@@ -102,11 +127,31 @@
           </div>
         </div>
 
+        <!-- Decision Helper -->
+        <div class="decision-helper" id="decisionHelper" style="display: none;">
+          <div class="pot-odds-display">
+            <div class="stat">
+              <span class="stat-label">Pot Odds</span>
+              <span class="stat-value" id="potOddsValue">--</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Expected Value</span>
+              <span class="stat-value ev" id="evValue">--</span>
+            </div>
+          </div>
+
+          <div class="recommendation" id="recommendation">
+            <span class="rec-label">המלצה:</span>
+            <span class="rec-action" id="recAction">--</span>
+          </div>
+        </div>
+
         <div class="action-buttons">
           <button class="btn btn-primary" id="calculateBtn">
             <span id="calculateText">חשב מחדש</span>
             <span class="loading" id="calculateLoading" style="display: none;"></span>
           </button>
+          <button class="btn btn-secondary" onclick="copyShareLink()">📤 שתף</button>
           <button class="btn btn-secondary" id="resetBtn">אפס הכל</button>
         </div>
       </section>

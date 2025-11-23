@@ -218,6 +218,9 @@ async function calculateOdds() {
                 winPercentageEl.style.color = 'var(--accent-red)';
             }
 
+            // Update Pot Odds & EV if pot/bet are set
+            updateDecisionHelper(winPct);
+
         } catch (error) {
             console.error('Error calculating odds:', error);
             document.getElementById('winPercentage').textContent = 'שגיאה';
@@ -230,6 +233,162 @@ async function calculateOdds() {
             if (calculateLoading) calculateLoading.style.display = 'none';
         }
     }, 50);
+}
+
+// ===== POT ODDS & EV CALCULATOR =====
+
+function calculatePotOdds() {
+    const potSize = parseFloat(document.getElementById('potSize').value) || 0;
+    const betSize = parseFloat(document.getElementById('betSize').value) || 0;
+
+    if (betSize === 0) return null;
+
+    const totalPot = potSize + betSize;
+    const potOdds = (betSize / totalPot) * 100;
+
+    return potOdds;
+}
+
+function calculateEV(winRate, potSize, betSize) {
+    const totalPot = potSize + betSize;
+    const winAmount = totalPot * (winRate / 100);
+    const loseAmount = betSize * ((100 - winRate) / 100);
+
+    return winAmount - loseAmount;
+}
+
+function updateDecisionHelper(winRate) {
+    const potSize = parseFloat(document.getElementById('potSize').value) || 0;
+    const betSize = parseFloat(document.getElementById('betSize').value) || 0;
+
+    if (potSize === 0 || betSize === 0) {
+        document.getElementById('decisionHelper').style.display = 'none';
+        return;
+    }
+
+    const potOdds = calculatePotOdds();
+    const ev = calculateEV(winRate, potSize, betSize);
+
+    // Display
+    document.getElementById('decisionHelper').style.display = 'block';
+    document.getElementById('potOddsValue').textContent = potOdds.toFixed(1) + '%';
+    document.getElementById('evValue').textContent = (ev >= 0 ? '+' : '') + ev.toFixed(2) + '₪';
+
+    // Color EV
+    const evEl = document.getElementById('evValue');
+    evEl.style.color = ev >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+
+    // Recommendation
+    const recAction = document.getElementById('recAction');
+    if (winRate >= potOdds) {
+        recAction.textContent = 'CALL ✓';
+        recAction.className = 'rec-action call';
+    } else {
+        recAction.textContent = 'FOLD ✗';
+        recAction.className = 'rec-action fold';
+    }
+}
+
+// ===== THEME SYSTEM =====
+
+function setTheme(themeName) {
+    document.body.className = themeName === 'default' ? '' : `theme-${themeName}`;
+    localStorage.setItem('poker-theme', themeName);
+
+    // Update active button
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === themeName);
+    });
+}
+
+// ===== URL SHARING =====
+
+function generateShareURL() {
+    const params = new URLSearchParams();
+
+    // Player cards
+    if (state.playerCards.length > 0) {
+        params.set('p', state.playerCards.map(c => c.toString()).join(','));
+    }
+
+    // Community cards
+    if (state.communityCards.length > 0) {
+        params.set('c', state.communityCards.map(c => c.toString()).join(','));
+    }
+
+    // Players
+    params.set('n', state.numPlayers);
+
+    // Pot info
+    const potSize = document.getElementById('potSize')?.value;
+    const betSize = document.getElementById('betSize')?.value;
+    if (potSize && potSize !== '0') params.set('pot', potSize);
+    if (betSize && betSize !== '0') params.set('bet', betSize);
+
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+}
+
+function parseCardFromString(cardStr) {
+    // cardStr format: "A♠", "K♥", etc.
+    if (cardStr.length < 2) return null;
+
+    const rank = cardStr.slice(0, -1);
+    const suit = cardStr.slice(-1);
+
+    return new Card(rank, suit);
+}
+
+function loadFromURL() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Load player cards
+    if (params.has('p')) {
+        const cardStrs = params.get('p').split(',');
+        state.playerCards = cardStrs.map(parseCardFromString).filter(c => c !== null);
+    }
+
+    // Load community cards
+    if (params.has('c')) {
+        const cardStrs = params.get('c').split(',');
+        state.communityCards = cardStrs.map(parseCardFromString).filter(c => c !== null);
+    }
+
+    // Load players
+    if (params.has('n')) {
+        state.numPlayers = parseInt(params.get('n')) || 4;
+        document.getElementById('numPlayersDisplay').textContent = state.numPlayers;
+    }
+
+    // Load pot info
+    if (params.has('pot')) {
+        document.getElementById('potSize').value = params.get('pot');
+    }
+    if (params.has('bet')) {
+        document.getElementById('betSize').value = params.get('bet');
+    }
+
+    // Update UI if we loaded cards
+    if (state.playerCards.length > 0 || state.communityCards.length > 0) {
+        updateUI();
+    }
+}
+
+async function copyShareLink() {
+    const url = generateShareURL();
+    try {
+        await navigator.clipboard.writeText(url);
+        showToast('✓ קישור הועתק!');
+    } catch (err) {
+        showToast('✗ שגיאה בהעתקה');
+    }
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
 }
 
 // Reset all
@@ -249,7 +408,18 @@ function resetAll() {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize
     initializeCards();
-    updateUI();
+
+    // Load from URL if params exist
+    loadFromURL();
+
+    // If no cards loaded from URL, update UI normally
+    if (state.playerCards.length === 0 && state.communityCards.length === 0) {
+        updateUI();
+    }
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('poker-theme') || 'default';
+    setTheme(savedTheme);
 
     // Initialize stepper button states
     document.getElementById('decrementPlayers').disabled = state.numPlayers <= 2;
@@ -259,6 +429,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('hideCards').addEventListener('change', (e) => {
         state.hidePlayerCards = e.target.checked;
         updateSelectedCardsDisplay('playerCardsDisplay', state.playerCards, 2, state.hidePlayerCards);
+    });
+
+    // Theme button listeners
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => setTheme(btn.dataset.theme));
+    });
+
+    // Pot/Bet inputs - recalculate when changed
+    ['potSize', 'betSize'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+            if (state.playerCards.length === 2 && state.communityCards.length > 0) {
+                calculateOdds();
+            }
+        });
     });
 
     // Calculate button

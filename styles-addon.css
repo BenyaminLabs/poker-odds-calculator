@@ -1,0 +1,263 @@
+/* Theme selector and additional themes appended to existing styles.css */
+
+/* Theme Selector in Header */
+.theme-selector {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-top: var(--spacing-md);
+}
+
+.theme-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-gold);
+}
+
+.theme-btn.active {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    transform: scale(1.15);
+}
+
+/* Ocean Blue Theme */
+body.theme-ocean {
+    --bg-primary: #0a1929;
+    --bg-secondary: #1e293b;
+    --bg-table: #1e3a5f;
+    --bg-card: #334155;
+    --bg-card-hover: #475569;
+    --accent-gold: #60a5fa;
+    --accent-gold-dim: #3b82f6;
+    --accent-green: #22d3ee;
+    --accent-red: #f87171;
+    --border-color: #475569;
+}
+
+/* Purple Night Theme */
+body.theme-purple {
+    --bg-primary: #1a0b2e;
+    --bg-secondary: #2d1b4e;
+    --bg-table: #4a1c6f;
+    --bg-card: #5b2a85;
+    --bg-card-hover: #6d3999;
+    --accent-gold: #a78bfa;
+    --accent-gold-dim: #8b5cf6;
+    --accent-green: #c084fc;
+    --accent-red: #f472b6;
+    --border-color: #6d3999;
+}
+
+/* Light Mode Theme */
+body.theme-light {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-table: #dcfce7;
+    --bg-card: #f1f5f9;
+    --bg-card-hover: #e2e8f0;
+    --bg-card-selected: #fef3c7;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-gold: #f59e0b;
+    --border-color: #cbd5e1;
+    --accent-gold: #f59e0b;
+    --accent-gold-dim: #d97706;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --suit-red: #dc2626;
+    --suit-black: #1e293b;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Pot & Bet Inputs */
+.pot-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.input-group label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: var(--shadow-glow);
+}
+
+.input-group input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* Decision Helper */
+.decision-helper {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid var(--accent-green);
+    border-radius: 12px;
+    animation: fadeIn var(--transition-base);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pot-odds-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.pot-odds-display .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--accent-gold);
+}
+
+.stat-value.ev {
+    color: var(--text-primary);
+}
+
+.recommendation {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: 8px;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    border: 2px solid var(--border-color);
+}
+
+.rec-label {
+    color: var(--text-secondary);
+    margin-left: var(--spacing-sm);
+}
+
+.rec-action {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+}
+
+.rec-action.call {
+    color: var(--accent-green);
+}
+
+.rec-action.fold {
+    color: var(--accent-red);
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 8px;
+    border: 2px solid var(--accent-gold);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    z-index: 1000;
+    animation: toastSlide 2s ease-in-out;
+}
+
+@keyframes toastSlide {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+}
+
+/* Responsive - Pot Inputs */
+@media (max-width: 360px) {
+    .pot-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .pot-odds-display {
+        grid-template-columns: 1fr;
+    }
+}
